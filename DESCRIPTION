@@ -1,0 +1,16 @@
+Package: RTM
+Title: Regression to the mean
+Type: Package
+Version: 0.0.0.9000
+Authors@R: 
+    person("Muhammad Umair", "Manzoor Khan", , "mumair@stat.qau.edu.pk", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Maintainer: Muhammad Umair <mumair@stat.qau.edu.pk>
+Description: Compute regression to the mean effect under bivariate distribution and test treatment means after adjusting RTM.
+Depends: hypergeo, pracma, PairedData, BSDA, R (>= 2.10)
+Imports: stats, graphics
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+LazyData: true
