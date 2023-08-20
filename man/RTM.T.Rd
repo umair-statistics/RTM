@@ -4,7 +4,8 @@
 \alias{RTM.T}
 \title{Compute Regression to the mean under bivariate \eqn{t}-distributions}
 \usage{
-RTM.T(data, df, theta, cutoff, truncation, conf.level = 0.95)
+RTM.T(data, df, theta, cutoff, truncation,
+      conf.level = 0.95)
 }
 \arguments{
 \item{data}{Numeric bivariate data in which the baseline measurement is above or below cutoff points.}
@@ -69,7 +70,7 @@ Shaw, W. T., & Lee, K. T. A. (2008). Bivariate Student t distributions with vari
 of freedom and independence. \emph{Journal of Multivariate Analysis}, 99(6), 1276-1287.
 }
 \seealso{
-\code{\link{dbvt}}, \code{\link{RTM.T}}
+\code{\link{RTM.Norm}}
 }
 \author{
 Muhammad Umair, Manzoor Khan

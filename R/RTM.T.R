@@ -35,7 +35,7 @@
 #' @import PairedData
 #' @export RTM.T
 #' @author Muhammad Umair, Manzoor Khan
-#' @seealso \code{\link{dbvt}}, \code{\link{RTM.T}}
+#' @seealso \code{\link{RTM.Norm}}
 #' @references Shaw, W. T., & Lee, K. T. A. (2008). Bivariate Student t distributions with variable marginal degrees
 #'  of freedom and independence. \emph{Journal of Multivariate Analysis}, 99(6), 1276-1287.
 #'
@@ -52,7 +52,9 @@
 #' RTM$estimate[1]
 #'   ### Treatment effect (left cutoff), Total effect + RTM
 #' RTM$estimate[2]
-RTM.T <- function (data,df,theta,cutoff,truncation, conf.level = 0.95)
+RTM.T <-
+function(data, df, theta, cutoff, truncation,
+    conf.level = 0.95)
 {
   #Checking the conditions
   if (nrow(data)<3)
