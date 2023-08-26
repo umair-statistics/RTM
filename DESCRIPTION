@@ -3,8 +3,13 @@ Title: Regression to the mean
 Type: Package
 Version: 0.0.1
 Authors@R: 
-    person("Muhammad Umair", "Manzoor Khan", , "mumair@stat.qau.edu.pk", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+  c(person("Muhammad","Umair",
+           role = c("aut", "cre"),
+           email = "mumair@stat.qau.edu.pk",
+           comment = c(ORCID = "0000-0001-6119-5241")),
+    person("Manzoor","Khan",
+           role = "ctb",
+           comment = c(ORCID = "0000-0002-9723-0448")))
 Maintainer: Muhammad Umair <mumair@stat.qau.edu.pk>
 Description: Compute regression to the mean effect under bivariate distribution and test treatment means after adjusting RTM.
 Depends: hypergeo, pracma, PairedData, BSDA, R (>= 2.10)

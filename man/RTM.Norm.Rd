@@ -4,8 +4,7 @@
 \alias{RTM.Norm}
 \title{Regression to the mean under bivariate Normal distribution}
 \usage{
-RTM.Norm(data, mu, Sigma, delta = 0, cutoff, truncation,
-         conf.level = 0.95)
+RTM.Norm(data, mu, Sigma, delta = 0, cutoff, truncation, conf.level = 0.95)
 }
 \arguments{
 \item{data}{Numeric bivariate data in which the baseline measurement is above or below cutoff points}
