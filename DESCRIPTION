@@ -1,7 +1,7 @@
 Package: RTM
 Title: Regression to the mean
 Type: Package
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
   c(person("Muhammad","Umair",
            role = c("aut", "cre"),
