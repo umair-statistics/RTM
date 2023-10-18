@@ -1,25 +1,18 @@
-
 RTM
 ========
 
 ### Version 0.1.0
 
+### Muhammad Umair and Manzoor Khan
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-
-
-### Muhammad Umair, Manzoor khan
-
-**RTM**: Estimate regression to the mean effect and test the treatment means under different bivariate truncated distributions 
+**RTM**: A R package for computing Regression to the Mean (RTM) effect and test the treatment effect under bivariate truncated distributions
 
 Please report any **bugs** or **suggestions** at:
 <https://github.com/umair-statistics/RTM/issues>.
 
 ### Installation
 
-The stable version of the package is available for download from github at <https://github.com/umair-statistics/RTM>
-
-You may install the most recent development version of **RTM** using the [devtools](https://github.com/r-lib/devtools) function `install_github()`.
+You can install the most recent development version of **RTM** using the [devtools](https://github.com/r-lib/devtools) function `install_github()`.
 
 However, you need to make sure you're set up to develop packages. This is platform specific:
 
@@ -44,5 +37,11 @@ To install the **RTM** package, type the following at the **R** prompt:
 ```r
 devtools::install_github('umair-statistics/RTM')
 ```
+    
+It is possible to install **RTM** with [GIT](https://git-scm.com/) and the **R CMD build** assuming you have GIT installed and the appropriate tools to build **R** from source.
 
-
+```bash
+git clone https://github.com/umair-statistics/RTM.git
+R CMD build RTM
+R CMD INSTALL RTM_*.tar.gz
+```
