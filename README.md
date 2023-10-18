@@ -13,11 +13,11 @@ RTM
 **RTM**: Estimate regression to the mean effect and test the treatment means under different bivariate truncated distributions 
 
 Please report any **bugs** or **suggestions** at:
-<https://github.com/umair1nonly/RTM/issues>.
+<https://github.com/umair-statistics/RTM/issues>.
 
 ### Installation
 
-The stable version of the package is available for download from github at <https://github.com/umair1nonly/RTM>
+The stable version of the package is available for download from github at <https://github.com/umair-statistics/RTM>
 
 You may install the most recent development version of **RTM** using the [devtools](https://github.com/r-lib/devtools) function `install_github()`.
 
