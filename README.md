@@ -42,5 +42,7 @@ To install the **RTM** package, type the following at the **R** prompt:
 
 
 ```r
-devtools::install_github('umair1nonly/RTM')
+devtools::install_github('umair-statistics/RTM')
 ```
+
+
