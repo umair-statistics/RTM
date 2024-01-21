@@ -100,7 +100,7 @@ function(data, mu, Sigma, delta=0, cutoff, truncation,
     X<-data[,1]
     Y<-data[,2]
     #compute the treatment effect
-    delta.est<-round(mean(X-Y+RTM),4)
+    delta.est<-round(mux-muy,4)
     #test the treatment effect by eliminating RTM
     test<- z.test(X-Y+RTM,sigma.x =SigXY,mu=delta,conf.level=conf.level)
   }else{
@@ -119,7 +119,7 @@ function(data, mu, Sigma, delta=0, cutoff, truncation,
     X<-data[,1]
     Y<-data[,2]
     #compute the treatment effect
-    delta.est<-round(mean(X-Y-RTM),4)
+    delta.est<-round(mux-muy-RTM,4)
     #test the treatment effect by eliminating RTM
     test<- z.test(X-Y-RTM,sigma.x =SigXY,mu=delta,conf.level=conf.level)
   }
