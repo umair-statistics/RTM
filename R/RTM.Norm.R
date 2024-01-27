@@ -43,17 +43,19 @@
 #' @export RTM.Norm
 #'
 #' @examples
+#' library(RTM)
 #' data("LeadExposedChildren")
 #'   ### extract treatment group, baseline and followup measurement
 #' treatGrp<- LeadExposedChildren[LeadExposedChildren$Group=="A",c(3,6)]
 #'   ### cutoff point it is different for different studies
-#' cutoff<-19.5
+#' cutoff<-19.7
 #'   ### define mean and variance covariance matrix
-#' mu<-c(19.808,18.168)
-#' varcov<-matrix(c(8.269^2,0.885*8.269*7.929,
-#' 0.885*8.269*7.929,7.929^2),nrow = 2)
+#' mu<-c(20.096,14.887)
+#' varcov<-matrix(c(8.251^2,0.684*8.251*11.006,
+#'               0.684*8.251*11.006,8.251^2),nrow = 2)
 #'   ### estimate the RTM effect
-#' RTM<-RTM.Norm(treatGrp,mu=mu,Sigma = varcov,cutoff = cutoff,truncation = "right")
+#' RTM<-RTM.Norm(treatGrp,mu=mu,Sigma = varcov,cutoff = cutoff,
+#'               truncation = "right")
 #' RTM
 #'   ### Total effect
 #' mean(treatGrp[,1]-treatGrp[,2])
@@ -88,13 +90,13 @@ function(data, mu, Sigma, delta=0, cutoff, truncation,
   if (truncation=="left") {
     mux<-mu[1]
     muy<-mu[2]
-    sigx<-diag(Sigma)[1]
-    sigy<-diag(Sigma)[2]
-    cor<-(Sigma[2,1])/sqrt(sigx*sigy)
-    z<-(mu[1]-cutoff)/sqrt(sigx)
-    SigXY<-(dnorm(z)/pnorm(z))*(z-dnorm(z)/pnorm(z))*(sqrt(sigx)-
-                                                        cor*sqrt(sigy))^2+sigx+sigy-2*cor*sqrt(sigx*sigy)
-    RTM<-(sqrt(sigx)-sqrt(sigy)*cor)*dnorm(z)/pnorm(z)
+    var.x<-diag(Sigma)[1]
+    var.y<-diag(Sigma)[2]
+    cor<-(Sigma[2,1])/sqrt(var.x*var.y)
+    z<-(mu[1]-cutoff)/sqrt(var.x)
+    Var.XY<-(dnorm(z)/pnorm(z))*(z-dnorm(z)/pnorm(z))*(sqrt(var.x)-
+                                                        cor*sqrt(var.y))^2+(var.x+var.y-2*cor*sqrt(var.x*var.y))
+    RTM<-(sqrt(var.x)-sqrt(var.y)*cor)*dnorm(z)/pnorm(z)
     RTM<-round(RTM,4)
     #extract pre and post variables
     X<-data[,1]
@@ -102,26 +104,25 @@ function(data, mu, Sigma, delta=0, cutoff, truncation,
     #compute the treatment effect
     delta.est<-round(mux-muy,4)
     #test the treatment effect by eliminating RTM
-    test<- z.test(X-Y+RTM,sigma.x =SigXY,mu=delta,conf.level=conf.level)
+    test<- z.test(X-Y+RTM,sigma.x =sqrt(Var.XY),mu=delta,conf.level=conf.level)
   }else{
     mux<-mu[1]
     muy<-mu[2]
-    sigx<-diag(Sigma)[1]
-    sigy<-diag(Sigma)[2]
-    cor<-(Sigma[2,1])/sqrt(sigx*sigy)
-    z<-(cutoff-mu[1])/sqrt(sigx)
-    SigXY<-(dnorm(z)/(1-pnorm(z)))*(z-dnorm(z)/(1-pnorm(z)))*(sqrt(sigx)-
-                                                                cor*sqrt(sigy))^2+sigx+sigy-2*cor*sqrt(sigx*sigy)
-
-    RTM<-(sqrt(sigx)-sqrt(sigy)*cor)*dnorm(z)/(1-pnorm(z))
+    var.x<-diag(Sigma)[1]
+    var.y<-diag(Sigma)[2]
+    cor<-(Sigma[2,1])/sqrt(var.x*var.y)
+    z<-(cutoff-mu[1])/sqrt(var.x)
+    Var.XY<-(dnorm(z)/(1-pnorm(z)))*(z-dnorm(z)/(1-pnorm(z)))*(sqrt(var.x)-
+                                                         cor*sqrt(var.y))^2+(var.x+var.y-2*cor*sqrt(var.x*var.y))
+    RTM<-(sqrt(var.x)-sqrt(var.y)*cor)*dnorm(z)/(1-pnorm(z))
     RTM<-round(RTM,4)
     #extract pre and post variables
     X<-data[,1]
     Y<-data[,2]
     #compute the treatment effect
-    delta.est<-round(mux-muy-RTM,4)
+    delta.est<-round(mux-muy,4)
     #test the treatment effect by eliminating RTM
-    test<- z.test(X-Y-RTM,sigma.x =SigXY,mu=delta,conf.level=conf.level)
+    test<- z.test(X-Y-RTM,sigma.x =sqrt(Var.XY),mu=delta,conf.level=conf.level)
   }
 
   #confidence interval

@@ -54,17 +54,19 @@ The alternative hypothesis is that the mean of difference between pre and post m
 }
 
 \examples{
+library(RTM)
 data("LeadExposedChildren")
   ### extract treatment group, baseline and followup measurement
 treatGrp<- LeadExposedChildren[LeadExposedChildren$Group=="A",c(3,6)]
   ### cutoff point it is different for different studies
-cutoff<-19.5
+cutoff<-19.7
   ### define mean and variance covariance matrix
-mu<-c(19.808,18.168)
-varcov<-matrix(c(8.269^2,0.885*8.269*7.929,
-0.885*8.269*7.929,7.929^2),nrow = 2)
+mu<-c(20.096,14.887)
+varcov<-matrix(c(8.251^2,0.684*8.251*11.006,
+              0.684*8.251*11.006,8.251^2),nrow = 2)
   ### estimate the RTM effect
-RTM<-RTM.Norm(treatGrp,mu=mu,Sigma = varcov,cutoff = cutoff,truncation = "right")
+RTM<-RTM.Norm(treatGrp,mu=mu,Sigma = varcov,cutoff = cutoff,
+              truncation = "right")
 RTM
   ### Total effect
 mean(treatGrp[,1]-treatGrp[,2])
