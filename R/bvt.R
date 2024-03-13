@@ -1,4 +1,4 @@
-##' @name bv-t
+##' @name bvt
 ##' @aliases rbvt
 ##' @aliases dbvt
 ##'
@@ -33,7 +33,7 @@
 ##' randomT<-rbvt(n=1000,df=c(15,9),theta=pi/4)
 ##' hist(randomT[,1])
 ##'
-##' @rdname bv-t
+##' @rdname bvt
 ##' @export
 rbvt<-function (n,df,theta)
 {
@@ -54,7 +54,7 @@ rbvt<-function (n,df,theta)
   return(round(t,9))
 }
 ##'
-##' @rdname bv-t
+##' @rdname bvt
 ##' @examples
 ##'   #create bivariate t-distribution
 ##' t1    <- sort(randomT[,1])
@@ -96,10 +96,10 @@ dbvt <- function (t1,t2,df,theta,cutoff,truncation=NULL)
   n1<-df[1]
   n2<-df[2]
   #compute the density
-  alpha1<-1+t1^2/(n1*(cos(theta))^2)
-  alpha2<-1+t2^2/(n2*(cos(theta))^2)
-  gamma1<-(2*t1*t2*sin(theta))/(sqrt(n1*n2)*(cos(theta))^2)
-  C<-1/(cos(theta)*pi*sqrt(n1*n2)*gamma(n1/2)*gamma(n2/2))
+  alpha1<-1+t1^2/(n1*(sqrt(1-(sin(theta))^2))^2)
+  alpha2<-1+t2^2/(n2*(sqrt(1-(sin(theta))^2))^2)
+  gamma1<-(2*t1*t2*sin(theta))/(sqrt(n1*n2)*(sqrt(1-(sin(theta))^2))^2)
+  C<-1/((sqrt(1-(sin(theta))^2))*pi*sqrt(n1*n2)*gamma(n1/2)*gamma(n2/2))
 
   a<-gamma((n1+1)/2)
   b<-gamma((n2+1)/2)

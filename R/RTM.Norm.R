@@ -37,8 +37,9 @@
 #' @importFrom stats dnorm pnorm
 #' @author Manzoor and Oliver
 #' @seealso \code{\link{RTM.T}}
-#' @references Khan, M., & Olivier, J. (2019). Regression to the mean for the bivariate binomial distribution.
-#' \emph{Statistics in medicine}, 38(13), 2391-2412.
+#' @references Khan, M., & Olivier, J. (2023). Regression to the mean: Estimation and adjustment under the bivariate normal
+#' distribution.\emph{Communications in Statistics - Theory and Methods}, 52(19): 6972–6990. DOI:10.1080/
+#' 03610926.2022.2037645
 
 #' @export RTM.Norm
 #'

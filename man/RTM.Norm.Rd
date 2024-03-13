@@ -4,7 +4,13 @@
 \alias{RTM.Norm}
 \title{Regression to the mean under bivariate Normal distribution}
 \usage{
-RTM.Norm(data, mu, Sigma, delta = 0, cutoff, truncation, conf.level = 0.95)
+RTM.Norm(data,
+         mu,
+         Sigma,
+         delta = 0,
+         cutoff,
+         truncation,
+         conf.level = 0.95)
 }
 \arguments{
 \item{data}{Numeric bivariate data in which the baseline measurement is above or below cutoff points}
@@ -76,8 +82,9 @@ RTM$estimate[2]
 RTM$estimate[1]
 }
 \references{
-Khan, M., & Olivier, J. (2019). Regression to the mean for the bivariate binomial distribution.
-\emph{Statistics in medicine}, 38(13), 2391-2412.
+Khan, M., & Olivier, J. (2023). Regression to the mean: Estimation and adjustment under the bivariate normal
+distribution.\emph{Communications in Statistics - Theory and Methods}, 52(19): 6972–6990. DOI:10.1080/
+03610926.2022.2037645
 }
 \seealso{
 \code{\link{RTM.T}}

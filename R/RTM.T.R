@@ -30,7 +30,7 @@
 #' population mean for difference of pre and post measurement in \code{data} is equal to zero.
 #'
 #' The alternative hypothesis in each case i.e \code{truncation="left"} or \code{truncation="right"} does not equal to zero.
-#' @importFrom pracma integral2
+#' @importFrom cubature adaptIntegrate
 #' @importFrom stats t.test
 #' @import PairedData
 #' @export RTM.T
@@ -52,9 +52,8 @@
 #' RTM$estimate[1]
 #'   ### Treatment effect (left cutoff), Total effect + RTM
 #' RTM$estimate[2]
-RTM.T <-
-function(data, df, theta, cutoff, truncation,
-    conf.level = 0.95)
+RTM.T <- function(data, df, theta, cutoff, truncation,
+                  conf.level = 0.95)
 {
   #Checking the conditions
   if (nrow(data)<3)
@@ -79,36 +78,33 @@ function(data, df, theta, cutoff, truncation,
       x<-(n+cutoff^(2))/n
       E.t1<-(sqrt(n)*gamma((n+1)/2))/(sqrt(pi)*gamma(n/2)*(pt(cutoff,n)))*(1/((n-1)*(x)^((n-1)/2)))
       E.t2<-(sqrt(n)*gamma((n+1)/2)*sin(theta))/(sqrt(pi)*gamma(n/2)*(pt(cutoff,n)))*(1/((n-1)*(x)^((n-1)/2)))
+      RTM<-round(E.t1-E.t2,4)
       #Perform numerical integration if DoF are not equal
     }else{
       #E(t1|t1>c)
-      RTM.t1 <- function(t1,t2){
-        n1<-df[1]
-        n2<-df[2]
-        theta<-theta
-        t1*dbvt(t1,t2,c(n1,n2),theta,cutoff,truncation = "left")
+      RTM.t1 <- function(t,df,theta,cutoff,truncation){
+        t[1]*dbvt(t[1],t[2],df,theta,cutoff,truncation)
       }
       #E(t2|t1>c)
-      RTM.t2 <- function(t1,t2){
-        n1<-df[1]
-        n2<-df[2]
-        theta<-theta
-        cutoff<-cutoff
-        t2*dbvt(t1,t2,c(n1,n2),theta,cutoff,truncation = "left")
+      RTM.t2 <- function(t,df,theta,cutoff,truncation){
+        t[2]*dbvt(t[1],t[2],df,theta,cutoff,truncation)
       }
-      #The integral2 doest support inf so put large value for
-      #better approximation
-      E.t1<-integral2(RTM.t1,-100,cutoff,-100,100)$Q
-      E.t2<-integral2(RTM.t2,-100,cutoff,-100,100)$Q
+      # Define the infinite limits
+      lower_limit <- c(-Inf,-Inf)  # Lower limits for t1 and t2
+      upper_limit <- c(cutoff, Inf)     # Upper limits for t1 and t2
+
+      # Perform the double integration
+      E.t1 <- adaptIntegrate(RTM.t1, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="left")$integral
+      E.t2 <- adaptIntegrate(RTM.t2, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="left")$integral
+      RTM<-round(E.t2-E.t1,4)
     }
-    RTM<-round(E.t1-E.t2,4)
     #extract pre and post variables
-    t1<-data[,1]
-    t2<-data[,2]
-    #compute the treatment effect
-    delta<-round(mean(t1-t2+RTM),4)
+    t1<-as.matrix(data)[,1]
+    t2<-as.matrix(data)[,2]
     #test the treatment effect by eliminating RTM
     test<- t.test(t1-t2+RTM,conf.level=conf.level)
+    #compute the treatment effect
+    delta<-round(test$estimate,4)
   }else{
     if(df[1]==df[2]){
       #compute RTM from the derived formula
@@ -116,35 +112,32 @@ function(data, df, theta, cutoff, truncation,
       x<-(n+cutoff^(2))/n
       E.t1<-(sqrt(n)*gamma((n+1)/2))/(sqrt(pi)*gamma(n/2)*(1-pt(cutoff,n)))*(1/((n-1)*(x)^((n-1)/2)))
       E.t2<-(sqrt(n)*gamma((n+1)/2)*sin(theta))/(sqrt(pi)*gamma(n/2)*(1-pt(cutoff,n)))*(1/((n-1)*(x)^((n-1)/2)))
+      RTM<-round(E.t1-E.t2,4)
     }else{
       #E(t1|t1>c)
-      RTM.t1 <- function(t1,t2){
-        n1<-df[1]
-        n2<-df[2]
-        theta<-theta
-        t1*dbvt(t1,t2,c(n1,n2),theta,cutoff,truncation = "right")
+      RTM.t1 <- function(t,df,theta,cutoff,truncation){
+        t[1]*dbvt(t[1],t[2],df,theta,cutoff,truncation)
       }
       #E(t2|t1>c)
-      RTM.t2 <- function(t1,t2){
-        n1<-df[1]
-        n2<-df[2]
-        theta<-theta
-        cutoff<-cutoff
-        t2*dbvt(t1,t2,c(n1,n2),theta,cutoff,truncation = "right")
+      RTM.t2 <- function(t,df,theta,cutoff,truncation){
+        t[2]*dbvt(t[1],t[2],df,theta,cutoff,truncation)
       }
-      #The integral2 doesn't support inf so put a large value for
-      #better approximation
-      E.t1<-integral2(RTM.t1,cutoff,100,-100,100)$Q
-      E.t2<-integral2(RTM.t2,cutoff,100,-100,100)$Q
+      # Define the infinite limits
+      lower_limit <- c(cutoff,-Inf)  # Lower limits for t1 and t2
+      upper_limit <- c(Inf, Inf)     # Upper limits for t1 and t2
+
+      # Perform the double integration
+      E.t1 <- adaptIntegrate(RTM.t1, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="right")$integral
+      E.t2 <- adaptIntegrate(RTM.t2, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="right")$integral
+      RTM<-round(E.t1-E.t2,4)
     }
-    RTM<-round(E.t1-E.t2,4)
     #extract pre and post variables
     t1<-data[,1]
     t2<-data[,2]
-    #compute the treatment effect
-    delta<-round(mean(t1-t2-RTM),4)
     #test the treatment effect by eliminating RTM
     test<- t.test(t1-t2-RTM,conf.level=conf.level)
+    #compute the treatment effect
+    delta<-round(test$estimate,4)
   }
 
   #confidence interval
