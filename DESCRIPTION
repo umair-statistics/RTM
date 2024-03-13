@@ -13,8 +13,8 @@ Authors@R:
            comment = c(ORCID = "0000-0002-9723-0448")))
 Maintainer: Muhammad Umair <mumair@stat.qau.edu.pk>
 Description: Compute regression to the mean effect under bivariate distribution and test treatment means after adjusting RTM.
-Depends: R (>= 2.10)
-Imports: stats, graphics, hypergeo, PairedData, BSDA, cubature
+Depends: hypergeo, PairedData, BSDA, cubature, R (>= 2.10)
+Imports: stats, graphics
 License: GPL-3
 URL: https://github.com/umair-statistics/RTM
 Encoding: UTF-8
