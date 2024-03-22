@@ -30,7 +30,7 @@
 #' population mean for difference of pre and post measurement in \code{data} is equal to zero.
 #'
 #' The alternative hypothesis in each case i.e \code{truncation="left"} or \code{truncation="right"} does not equal to zero.
-#' @importFrom cubature pcubature
+#' @importFrom cubature hcubature
 #' @importFrom stats t.test
 #' @import PairedData
 #' @export RTM.T
@@ -94,8 +94,8 @@ RTM.T <- function(data, df, theta, cutoff, truncation,
       upper_limit <- c(cutoff, Inf)     # Upper limits for t1 and t2
 
       # Perform the double integration
-      E.t1 <- pcubature(RTM.t1, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="left")$integral
-      E.t2 <- pcubature(RTM.t2, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="left")$integral
+      E.t1 <- hcubature(RTM.t1, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="left")$integral
+      E.t2 <- hcubature(RTM.t2, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="left")$integral
       RTM<-round(E.t2-E.t1,4)
     }
     #extract pre and post variables
@@ -127,8 +127,8 @@ RTM.T <- function(data, df, theta, cutoff, truncation,
       upper_limit <- c(Inf, Inf)     # Upper limits for t1 and t2
 
       # Perform the double integration
-      E.t1 <- pcubature(RTM.t1, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="right")$integral
-      E.t2 <- pcubature(RTM.t2, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="right")$integral
+      E.t1 <- hcubature(RTM.t1, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="right")$integral
+      E.t2 <- hcubature(RTM.t2, lower_limit, upper_limit,df=df,theta=theta,cutoff=cutoff,truncation="right")$integral
       RTM<-round(E.t1-E.t2,4)
     }
     #extract pre and post variables
