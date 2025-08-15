@@ -4,7 +4,18 @@
 \alias{RTM.T}
 \title{Compute Regression to the mean under bivariate \eqn{t}-distributions}
 \usage{
-RTM.T(data, df, theta, cutoff, truncation, conf.level = 0.95)
+RTM.T(
+  data,
+  df,
+  theta,
+  cutoff,
+  truncation,
+  conf.level = 0.95,
+  tol = 1e-05,
+  maxEval = 0,
+  maxGrowIter = 120,
+  growFactor = 3
+)
 }
 \arguments{
 \item{data}{Numeric bivariate data in which the baseline measurement is above or below cutoff points.}
@@ -21,6 +32,14 @@ that the true treatment effect and baseline measurements are below the cutoff po
 
 \item{conf.level}{confidence level for the returned confidence interval,
 restricted to lie between zero and one}
+
+\item{tol}{Relative tolerance for numerical integration (smaller values give more precision but may increase computation time).}
+
+\item{maxEval}{Maximum number of function evaluations for the numerical integrator (0 uses the integrator's default limit).}
+
+\item{maxGrowIter}{Maximum number of iterations for the "growing-window" fallback integration when the main integration does not converge.}
+
+\item{growFactor}{Multiplier controlling how quickly the integration window expands in the growing-window method.}
 }
 \value{
 A list of class \code{htest}, containing the following components:
@@ -38,7 +57,7 @@ This function is based on the truncated bivariate \eqn{t}-distributions and crea
 adjustment of regression to the mean.
 }
 \details{
-The RTM effect is estimated from bivariate samples drawn from \eqn{t}-distribution truncated the baseline measurement
+The RTM effect is estimated from bivariate samples whose test statistics follows \eqn{t}-distributions truncated the baseline measurement
 either \code{"left"} or \code{"right"}. The treatment effect is estimated and test under adjustment of RTM.
 }
 \section{Null Hypothesis}{

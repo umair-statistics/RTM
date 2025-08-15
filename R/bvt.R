@@ -4,13 +4,17 @@
 ##'
 ##' @title Bivariate \eqn{t}-distributions
 ##' @description
-##' Generating random numbers, and density from bivariate \eqn{t}-distributions either truncated or complete.
-##' The mean of complete distribution is equal to zero
+##' Generating random numbers, and density from bivariate \eqn{t}-distributions either truncated or complete with \code{df} degree of freedom neither necessary equal
+##' nor integer and mixing angle \eqn{\theta}.
 ##' @details
-##' The bivariate \eqn{t}-distribution have identical marginals and equal or unequal degree of freedoms proposed by Shaw, W. T., & Lee, K. T. A. (2008).
+##' The bivariate \eqn{t}-distributions have identical or unequal marginals and equal or unequal degree of freedoms proposed by Shaw, W. T., & Lee, K. T. A. (2008).
 ##' The density function of bivariate \eqn{t}-distribution with equal degree of freedom is
 ##' \deqn{f\left( {t_1},{t_2};n,\theta \right) = \frac{1}{{2\pi \cos \left( \theta  \right)}}\frac{1}{{{{\left( {1 + \frac{\Delta }{n}} \right)}^{n/2 + 1}}}}}
-##' where \eqn{-\infty < {t_1} < \infty}, \eqn{- \infty  < {t_2} < \infty}, \eqn{\Delta  = ({t_1^2 + t_2^2 - 2{t_1}{t_2}\sin (\theta )})^{-1}{{{\cos }^2}(\theta )}}, \eqn{n} is the degree of freedom, \eqn{\theta} is the mixing angle.
+##' where \eqn{-\infty < {t_1} < \infty}, \eqn{- \infty  < {t_2} < \infty}, \eqn{\Delta  = ({t_1^2 + t_2^2 - 2{t_1}{t_2}\sin (\theta )}){{{\cos }^{-2}}(\theta )}}, \eqn{n} is the degree of freedom, \eqn{\theta} is the mixing angle.
+##' The test statistics is equal to \eqn{{T_1} = \sqrt {n/{C^2}} {Z_1}} and \eqn{{T_2} = \sqrt {n/{C^2}} \left( {{Z_1}\sin \left( \theta  \right) + {Z_2}\cos \left( \theta  \right)} \right)} where \eqn{\left( {{Z_1},{Z_2}} \right)\sim N\left( {0,1} \right)} and \eqn{{C^2} \sim \chi _n^2}.
+##' The mean of \eqn{t_1} and \eqn{t_2} is equal to 0 and variance \eqn{\frac{n}{n-2}}. If the degree of freedom for \eqn{t_1} and \eqn{t_2} is different with independent denominator then the test statistics are defined as
+##' \eqn{{T_1} = \sqrt {{n_1}/z} {Z_1}}, \eqn{{T_2} = \left( {{Z_2}\cos \left( \theta  \right) + \sin \left( \theta  \right)\sqrt {z/{n_1}} {T_1}} \right)/\sqrt {w/{n_2}}}.
+##' Where \eqn{n_1}, \eqn{n_2} are the degree of freedoms, \eqn{z \sim \chi _{{n_1}}^2}, \eqn{w \sim \chi _{{n_2}}^2} and \eqn{\left( {{Z_1},{Z_2}} \right) \sim N\left( {0,1} \right)}. The density is derived by authors through loosely grouped approach.
 ##'
 ##' @param t1 a numeric vector of baseline measurements
 ##' @param t2 a numeric vector of followup measurements
@@ -48,8 +52,8 @@ rbvt<-function (n,df,theta)
   n<-n
   z1<-rnorm(n)
   z2<-rnorm(n)
-  t1<-sqrt(n1/rchisq(n,n1))*z1
-  t2<-sqrt(n2/rchisq(n,n2))*(z1*sin(theta)+z2*cos(theta))
+  t1<-sqrt(n1/rchisq(n,n1))*rnorm(n)
+  t2<-(rnorm(n)*cos(theta)+sin(theta)*sqrt(rchisq(n,n1)/n1)*t1)/(sqrt(rchisq(n,n2)/n2))
   t<-cbind(t1,t2)
   return(round(t,9))
 }
