@@ -65,10 +65,8 @@
 #'   ### RTM
 #' RTM$estimate[1]
 
-RTM.Norm <-
-function(data, mu, Sigma, delta=0, cutoff, truncation,
-    conf.level = 0.95)
-{
+RTM.Norm <- function(data, mu, Sigma, delta=0,
+                     cutoff, truncation, conf.level = 0.95){
   #Checking the conditions
   p <- length(mu)
   if (!all(dim(Sigma) == c(p, p)))

@@ -1,5 +1,11 @@
-RTM
-========
+---
+title: "RTM: Regression to the Mean R Package"
+output: github_document
+---
+
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/umair-statistics/RTM)](https://github.com/umair-statistics/RTM/releases)
+[![GitHub all releases](https://img.shields.io/github/downloads/umair-statistics/RTM/total)](https://github.com/umair-statistics/RTM/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ### Version 0.2.0
 
@@ -45,3 +51,16 @@ git clone https://github.com/umair-statistics/RTM.git
 R CMD build RTM
 R CMD INSTALL RTM_*.tar.gz
 ```
+## Contributing
+
+Contributions are welcome!
+
+- Fork the repo
+
+- Create a feature branch
+
+- Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

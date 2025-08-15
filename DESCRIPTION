@@ -15,9 +15,12 @@ Maintainer: Muhammad Umair <mumair@stat.qau.edu.pk>
 Description: Compute regression to the mean effect under bivariate distribution and test treatment means after adjusting RTM.
 Depends: R (>= 2.10)
 Imports: stats, graphics, hypergeo, PairedData, BSDA, cubature
-License: GPL-3
+License: MIT + file LICENSE
 URL: https://github.com/umair-statistics/RTM
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

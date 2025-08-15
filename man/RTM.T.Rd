@@ -2,7 +2,7 @@
 % Please edit documentation in R/RTM.T.R
 \name{RTM.T}
 \alias{RTM.T}
-\title{Compute Regression to the mean under bivariate \eqn{t}-distributions}
+\title{Regression to the mean under bivariate \eqn{t}-distributions}
 \usage{
 RTM.T(
   data,
@@ -58,7 +58,12 @@ adjustment of regression to the mean.
 }
 \details{
 The RTM effect is estimated from bivariate samples whose test statistics follows \eqn{t}-distributions truncated the baseline measurement
-either \code{"left"} or \code{"right"}. The treatment effect is estimated and test under adjustment of RTM.
+either \code{"left"} or \code{"right"}. The treatment effect is estimated and test under adjustment of RTM proposed by Umair et al. (2024).
+The RTM expression for right cutoff and equal df is:
+\deqn{R_r(c; n, \theta) =\frac{\sqrt{n} \, \Gamma\left(\frac{n + 1}{2}\right) \, \left(1 - \sin(\theta)\right)}{\sqrt{\pi} \, \Gamma\left(\frac{n}{2}\right)
+ \, (n - 1) \, \left(1 + \frac{c^2}{n}\right)^{\frac{n-1}{2}} \, \left(1 - F_1(c)\right)}}
+where \eqn{\Gamma(\cdot)} is the gamma function. Due to the symmetry of the \eqn{t}-distribution, the relation \eqn{1-F_1(c)=F_1(-c)} holds true.
+For unequal degrees of freedom, a closed-form expression for the RTM does not exist, and the function must be evaluated numerically.
 }
 \section{Null Hypothesis}{
  The null hypothesis is
@@ -86,6 +91,9 @@ RTM$estimate[2]
 \references{
 Shaw, W. T., & Lee, K. T. A. (2008). Bivariate Student t distributions with variable marginal degrees
 of freedom and independence. \emph{Journal of Multivariate Analysis}, 99(6), 1276-1287.
+
+Umair, M., Khan, M., & Olivier, J. (2024). Accounting for regression to the mean under the bivariate t-distribution.
+\emph{Statistical Methods in Medical Research}, 33(9), 1624-1636. DOI:/10.1177/09622802241267808
 }
 \seealso{
 \code{\link{RTM.Norm}}
