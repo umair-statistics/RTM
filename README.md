@@ -1,7 +1,6 @@
----
-title: "RTM: Regression to the Mean R Package"
-output: github_document
----
+RTM: Regression to the Mean R Package
+===
+
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/umair-statistics/RTM)](https://github.com/umair-statistics/RTM/releases)
 [![GitHub all releases](https://img.shields.io/github/downloads/umair-statistics/RTM/total)](https://github.com/umair-statistics/RTM/releases)
